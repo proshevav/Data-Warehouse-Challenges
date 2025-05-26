@@ -1,2 +1,2 @@
 # Data-Warehouse-Challenges
-Brainster code challenges by practicing Data Warehousing.
+Brainster Academy code challenges by practicing Data Warehousing.
