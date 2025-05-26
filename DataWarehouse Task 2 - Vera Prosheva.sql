@@ -31,21 +31,18 @@ BEGIN
 	create table #AccountChanges
 	(
 		[AccountID] int not null, 
-		[AccountNumber] nvarchar(20) null, 
 		[AllowedOverdraft] decimal(18,2) null
 	)
 
 	--Insert into temp table
-	insert into #AccountChanges ([AccountID], [AccountNumber], [AllowedOverdraft])
+	insert into #AccountChanges ([AccountID], [AllowedOverdraft])
 	select ab.ID as AccountID,
-		   ab.AccountNumber,
 		   ab.AllowedOverdraft
 	from dimension.Account as a
 	inner join BrainsterDB.dbo.Account as ab on ab.ID = a.AccountID
 	where a.ValidFrom <= @Workday and @Workday <= a.ValidTo
 	and a.ValidTo = @MaxDate
-	and ( 
-		  isnull(a.AccountNumber, '') <> isnull(ab.AccountNumber, '') or
+	and (
 		  isnull(a.AllowedOverdraft, 0) <> isnull(ab.AllowedOverdraft, 0)
 	)
 
